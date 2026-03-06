@@ -5,7 +5,9 @@ from data import BASE_URL, LOGIN_COURIER_PATH
 
 @pytest.fixture
 def courier():
+    
     courier_data = register_new_courier()
+
     response = requests.post(
         BASE_URL + LOGIN_COURIER_PATH,
         data={
@@ -13,9 +15,9 @@ def courier():
             "password": courier_data["password"]
         }
     )
+
     courier_id = response.json()["id"]
-    
+
     yield courier_data
 
-    # удаляем курьера после теста
     delete_courier(courier_id)
